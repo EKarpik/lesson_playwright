@@ -1,9 +1,9 @@
 const config = {
-    url: "https://frontend.test.lk-team.pro/",
+    url: "https://frontend.test.lk-team.pro",
 
     credentials: {
-        username: "reader",
-        password: "Tes@"
+        username: "autotest",
+        password: "Auto12!@"
 
     }
 }

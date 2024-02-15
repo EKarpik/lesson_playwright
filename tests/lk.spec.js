@@ -1,7 +1,7 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
 
-test('старотовая страница авторизации', async ({ page }) => {
+test('стартовая страница авторизации', async ({ page }) => {
   await page.goto('https://frontend.test.lk-team.pro/');
   // Expect a title "to contain" a substring.
   await expect(page.locator('#kc-page-title')).toBeVisible()
