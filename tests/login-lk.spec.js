@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker'
+const { faker } = require('@faker-js/faker');
 const {test, expect} = require('@playwright/test');
 const MainPage = require('../pages/main-page');
 const LoginPage = require('../pages/login-page');
@@ -52,7 +52,7 @@ test('Change User profile info', async ({page}) => {
 
     const profileCard = new ProfileCard(page);//меняем ФИО в порфиле юзера
     await expect(page.locator("//input[@name='fio']")).toBeVisible();
-    await profileCard.changeName("profile_fio");
+    await profileCard.changeName(`имя_из_автотестов ${profile_fio}`);
     await profileCard.saveProfileChanges();
     await expect(page.locator("div[class*='enter-done']")).toHaveText('Изменения сохранены');
 })
