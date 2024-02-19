@@ -23,6 +23,12 @@ class LoginPage extends BasePage {
         await this._loginBtn.click();
     };
 
+    async fullLogin(login, password) {
+        await this.open('/');
+        await this.fillLoginForm(login, password);
+        await this.clickLoginBtn();
+
+    };
 }
 
 module.exports = LoginPage;

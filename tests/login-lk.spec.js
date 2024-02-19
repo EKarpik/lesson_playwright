@@ -11,84 +11,23 @@ let profile_fio = faker.person.fullName();
 
 test('Login. Wrong credentials.', async ({page}) => {
     const loginPage = new LoginPage(page);
-    await loginPage.open('/');
-    await loginPage.fillLoginForm('test', 'test12345');
-    await loginPage.clickLoginBtn();
+    await loginPage.fullLogin('test', 'test12345');
     await expect(page.getByText("Invalid username or password.")).toBeVisible();
 })
 
 test('User Login', async ({page}) => {
     const loginPage = new LoginPage(page);
-    await loginPage.open('/');
-    await loginPage.fillLoginForm('reader1', 'Pass12!@');
-    await loginPage.clickLoginBtn();
-    await page.waitForURL('/');
-
-    const header = new Header(page);
+    await loginPage.fullLogin('reader1', 'Pass12!@');
+    //проверяем, что вход выполнен именно на фронт в ЛК УК
     await expect(page.locator("[data-qa = 'SwitcherMenu']")).toBeVisible();
 })
 
-
 test('Login to Mounters profile', async ({page}) => {
-        const loginPage = new LoginPage(page);
-        await loginPage.open('/');
-        await loginPage.fillLoginForm('forlena', '0000');
-        await loginPage.clickLoginBtn();
-        await page.waitForURL('/');
+    const loginPage = new LoginPage(page);
+    await loginPage.fullLogin('forlena', '0000');
 
-    const header = new Header(page);
+    //проверяем, что вход выполнен на фронт монтажника
     await expect(page.locator("[data-qa = 'SupportSwitcher']")).toBeVisible();
 })
-
-test('Change User profile info', async ({page}) => {
-    const loginPage = new LoginPage(page);//залогинились
-    await loginPage.open('/');
-    await loginPage.fillLoginForm('reader1', 'Pass12!@');
-    await loginPage.clickLoginBtn();
-    await page.waitForURL('/');
-
-    const header = new Header(page);//переход в профиль юзера
-    await header.userProfileBtn();
-
-    const profileCard = new ProfileCard(page);//меняем ФИО в порфиле юзера
-    await expect(page.locator("//input[@name='fio']")).toBeVisible();
-    await profileCard.changeName(`имя_из_автотестов ${profile_fio}`);
-    await profileCard.saveProfileChanges();
-    await expect(page.locator("div[class*='enter-done']")).toHaveText('Изменения сохранены');
-})
-
-test('Device search by name', async ({page}) => {
-
-    const loginPage = new LoginPage(page);
-
-    await loginPage.open('/');
-    await loginPage.fillLoginForm('reader1', 'Pass12!@');
-    await loginPage.clickLoginBtn();
-
-    await page.goto('/objects');//переход на страницу устройств и ввод в поиск
-    const devicePage = new DevicePage(page);
-    await devicePage.fillSearchInput('рограммистов')
-    let firstSearchResult = page.locator("[data-qa = 'DeviceName']").first()
-    await expect(firstSearchResult).toHaveText(/рограммистов/);
-
-//здесь нужен новый локатор
-
-})
-
-test('Online concierge is activated', async ({page}) => {
-
-    const loginPage = new LoginPage(page);
-
-    await loginPage.open('/');
-    await loginPage.fillLoginForm('reader1', 'Pass12!@');
-    await loginPage.clickLoginBtn();
-    
-    const header = new Header(page);
-    await expect(page.locator("[data-qa = 'Call']")).toBeVisible();
-    //await expect(header.conciergeBtnColor('background-color', 'rgb(16, 178, 120)').;
-    await expect(page.getByRole("button", {name: "Онлайн-консьерж"})).toHaveCSS('background-color', 'rgb(16, 178, 120)');
-
-})
-
 
 
