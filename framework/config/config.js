@@ -2,7 +2,7 @@ const config = {
     url: "https://frontend.test.lk-team.pro",
 
     credentials: {
-        username: "autotest",
+        username: "autotest", //посто сотрудник
         password: "Auto12!@"
 
     }
